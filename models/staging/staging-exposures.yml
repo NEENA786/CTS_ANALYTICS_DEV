@@ -1,0 +1,16 @@
+version: 2
+
+exposures:
+  - name: qwt_sales_dashboard
+    type: dashboard
+    maturity: high
+    url: https://google.com
+    description: "sales dashboard for making team"
+    
+    depends_on:
+      - ref('fct_orders')
+      - ref('dim_customers')
+
+    owner: 
+        name: david
+        email: david@gmail.com

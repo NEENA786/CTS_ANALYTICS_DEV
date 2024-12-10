@@ -1,0 +1,38 @@
+version: 2
+ 
+models:
+  - name: stg_products
+    description: "{{ doc('products') }}"
+ 
+    columns:
+      - name: productid
+        description: uiquly identifies each product in products master table
+        tests:
+          - unique
+          - not_null
+ 
+      - name: productname
+        tests:
+          - not_null
+             
+  - name: stg_shipments
+    columns:
+      - name: status
+        tests:
+          - accepted_values:
+             values: ['shipped', 'returned', 'ordered', 'replaced']
+ 
+  - name: stg_orderdetails
+    columns:
+      - name: orderid
+        tests:
+          - relationships:
+              field: orderid
+              to: ref('stg_orders')
+ 
+  - name: stg_employees
+    columns:
+     - name: employeeid
+       tests:
+        - is_even
+ 

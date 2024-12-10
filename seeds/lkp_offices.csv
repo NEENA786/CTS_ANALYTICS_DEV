@@ -1,0 +1,6 @@
+Office,OfficeAddress,OfficePostalCode,OfficeCity,OfficeStateProvince,OfficePhone,OfficeFax,OfficeCountry
+1,Citygatan. 1,111 11,Stockholm,,(8) 100 100,(8) 100 110,Sweden
+2,Mellangatan. 33,222 22,Lund,,(46) 200 200,(46) 200 222,Sweden
+3,66 Rue de Qlik,3456,Paris,,(9) 344 344,(9) 344 362,France
+4,Boulevard 3,7890,Nice,,(67) 366 366,(67) 366 234,France
+5,234 Sun Street,98122,Seattle,WA,(206) 567 5670,(206) 567 5690,USA

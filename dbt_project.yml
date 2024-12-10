@@ -2,7 +2,7 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: 'my_new_project'
+name: 'CTS_ANALYTICS_DEV'
 version: '1.0.0'
 config-version: 2
 
@@ -35,8 +35,22 @@ clean-targets:         # directories to be removed by `dbt clean`
 # continue to be built as views. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 
+vars:
+  vcity: "'Madrid'"
+  dbt_dq_tool_schema: "{{env_var('DBT_AUDITSCHEMA','AUDITING_DEV')}}"
+  dq_tools_enable_store_test_results: True
+ 
+
+on-run-end: "{{ dq_tools.store_test_results(results) }}"
+
+seeds:
+  schema: LKPDATA
 models:
-  my_new_project:
-    # Applies to all files under models/example/
-    example:
-      +materialized: table
+  +pre-hook:
+    - "insert into {{env_var('DBT_SOURCEDB','QWTANALYTICS_DEV')}}.{{env_var('DBT_AUDITSCHEMA','AUDITING_DEV')}}.qwt_models_auditinfo(modelname, starttime, endtime, duration) values ('{{this}}', current_timestamp(), null, null);"
+  +post-hook:
+    - "update {{env_var('DBT_AUDITSCHEMA','AUDITING_DEV')}}.qwt_models_auditinfo set endtime = current_timestamp(), duration = datediff('second', starttime, current_timestamp()) where modelname= '{{this}}' and endtime is null;"
+
+  dq_tools:
+   
+    +schema: "{{env_var('DBT_AUDITSCHEMA','AUDITING_DEV')}}"
